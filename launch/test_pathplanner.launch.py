@@ -5,10 +5,10 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
 
-    controller_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'controller.yaml')
-    bt_navigator_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'bt_navigator.yaml')
-    planner_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'planner_server.yaml')
-    recovery_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'recovery.yaml')
+    controller_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'vikings_bot_1_controller.yaml')
+    bt_navigator_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'vikings_bot_1_bt_navigator.yaml')
+    planner_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'vikings_bot_1_planner_server.yaml')
+    recovery_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'vikings_bot_1_recovery.yaml')
 
     robot_name = "vikings_bot_1"
     

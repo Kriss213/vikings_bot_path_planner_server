@@ -1,4 +1,4 @@
-vikings_bot_1/controller_server:
+vikings_bot_2/controller_server:
   ros__parameters:
     use_sim_time: True
     controller_frequency: 10.0
@@ -22,7 +22,6 @@ vikings_bot_1/controller_server:
       plugin: "nav2_controller::SimpleGoalChecker"
       xy_goal_tolerance: 0.15
       yaw_goal_tolerance: 0.15
-      stateful: false
     # DWB parameters
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
@@ -43,8 +42,8 @@ vikings_bot_1/controller_server:
       decel_lim_theta: -3.2
       vx_samples: 20
       vy_samples: 5
-      vtheta_samples: 20
-      sim_time: 1.7
+      vtheta_samples: 30
+      sim_time: 2.5
       linear_granularity: 0.05
       angular_granularity: 0.025
       transform_tolerance: 0.2
@@ -52,37 +51,38 @@ vikings_bot_1/controller_server:
       trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: True
       stateful: True
+      #lookahead_dist: 0.0
       #critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
       critics: ["RotateToGoal", "Oscillation", "ObstacleFootprint", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
       #BaseObstacle.scale: 0.02
-      ObstacleFootprint.scale: 0.02
+      ObstacleFootprint.scale: 0.02 # How much to avoid from obstacles
       PathAlign.scale: 0.0
       PathAlign.forward_point_distance: 0.1
       GoalAlign.scale: 0.0
       GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 32.0
-      GoalDist.scale: 24.0
+      PathDist.scale: 32.0 # How strong to stay on global path
+      GoalDist.scale: 24.0 # How strong to reach local goal
       RotateToGoal.scale: 32.0
       RotateToGoal.xy_goal_tolerance: 0.15
       RotateToGoal.slowing_factor: 5.0
       RotateToGoal.lookahead_time: -1.0
 
-vikings_bot_1/local_costmap:
+vikings_bot_2/local_costmap:
   local_costmap:
     ros__parameters:
       update_frequency: 5.0
       publish_frequency: 2.0
       transform_tolerance: 0.5
-      global_frame: vikings_bot_1/odom
+      global_frame: vikings_bot_2/odom
       map_topic: /map
-      robot_base_frame: vikings_bot_1/base_link
+      robot_base_frame: vikings_bot_2/base_link
       use_sim_time: True
       rolling_window: True
       width: 4
       height: 4
-      resolution: 0.05
+      resolution: 0.025
       #robot_radius: 0.175
-      footprint: "[[0.8, 0.45], [-0.3, 0.45], [-0.3, -0.45], [0.8, -0.45]]"
+      footprint: "[[0.81, 0.46], [-0.31, 0.46], [-0.31, -0.46], [0.81, -0.46]]"
       #plugins: ["static_layer", "voxel_layer", "inflation_layer"]
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
@@ -100,8 +100,8 @@ vikings_bot_1/local_costmap:
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /vikings_bot_1/lidar_scan
-          #sensor_frame: vikings_bot_1/lidar_link
+          topic: /vikings_bot_2/lidar_scan
+          #sensor_frame: vikings_bot_2/lidar_link
           max_obstacle_height: 2.0
           clearing: True
           marking: True
