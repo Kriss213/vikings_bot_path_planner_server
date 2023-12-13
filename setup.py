@@ -3,7 +3,7 @@ import os
 from glob import glob
 
 
-package_name = 'path_planner_server'
+package_name = 'vikings_bot_path_planner_server'
 
 setup(
     name=package_name,

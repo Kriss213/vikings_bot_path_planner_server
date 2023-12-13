@@ -11,7 +11,7 @@ def launch_setup(context, *arg, **args):
     ### DATA INPUT ###
     vikings_bot_name = LaunchConfiguration("vikings_bot_name").perform(context)
 
-    package_name = 'path_planner_server'
+    package_name = 'vikings_bot_path_planner_server'
 
 
     ### CONFIG FILES ###
