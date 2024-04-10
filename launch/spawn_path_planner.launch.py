@@ -20,6 +20,8 @@ def launch_setup(context, *arg, **args):
     planner_yaml = os.path.join(get_package_share_directory(package_name), 'config', f'{vikings_bot_name}_planner_server.yaml')
     recovery_yaml = os.path.join(get_package_share_directory(package_name), 'config', f'{vikings_bot_name}_recovery.yaml')
 
+    behavior = os.path.join(get_package_share_directory(package_name), 'config', f'behavior.xml')
+
 
     ### NODES ###
     controller = Node(
@@ -52,7 +54,9 @@ def launch_setup(context, *arg, **args):
         executable='bt_navigator',
         name='bt_navigator',
         output='screen',
-        parameters=[bt_navigator_yaml])
+        parameters=[bt_navigator_yaml,
+                    {"default_nav_to_pose_bt_xml": behavior}
+                    ])
 
     lifecycle = Node(
         namespace=vikings_bot_name,
