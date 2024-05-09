@@ -45,7 +45,7 @@ vikings_bot_2/global_costmap:
       update_frequency: 1.0
       publish_frequency: 1.0
       global_frame: map
-      map_topic: /map
+      map_topic: /vikings_bot_1/map
       #transform_tolerance: 0.5
       robot_base_frame: vikings_bot_2/base_link
       use_sim_time: True

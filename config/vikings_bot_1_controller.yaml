@@ -74,7 +74,7 @@ vikings_bot_1/local_costmap:
       publish_frequency: 2.0
       transform_tolerance: 0.5
       global_frame: vikings_bot_1/odom
-      map_topic: /map
+      map_topic: /vikings_bot_1/map
       robot_base_frame: vikings_bot_1/base_link
       use_sim_time: True
       rolling_window: True
