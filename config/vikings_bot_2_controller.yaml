@@ -1,6 +1,6 @@
 vikings_bot_2/controller_server:
   ros__parameters:
-    use_sim_time: True
+    #use_sim_time: True
     controller_frequency: 10.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
@@ -76,7 +76,7 @@ vikings_bot_2/local_costmap:
       global_frame: vikings_bot_2/odom
       map_topic: /vikings_bot_1/map
       robot_base_frame: vikings_bot_2/base_link
-      use_sim_time: True
+      #use_sim_time: True
       rolling_window: True
       width: 4
       height: 4
