@@ -24,7 +24,15 @@ vikings_bot_1/controller_server:
       yaw_goal_tolerance: 0.15
     # DWB parameters
     FollowPath:
-      plugin: "dwb_core::DWBLocalPlanner"
+      plugin: "nav2_rotation_shim_controller::RotationShimController"
+      primary_controller: "dwb_core::DWBLocalPlanner"
+      angular_dist_threshold: 0.785
+      forward_sampling_distance: 0.5
+      rotate_to_heading_angular_vel: 0.5
+      max_angular_accel: 3.2
+      simulate_ahead_time: 1.0
+
+      # plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: True
       min_vel_x: 0.0
       min_vel_y: 0.0
@@ -60,12 +68,12 @@ vikings_bot_1/controller_server:
       PathAlign.forward_point_distance: 0.1
       GoalAlign.scale: 0.0
       GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 32.0 # How strong to stay on global path
+      PathDist.scale: 32.0 # 
       GoalDist.scale: 24.0 # How strong to reach local goal
       RotateToGoal.scale: 32.0
       RotateToGoal.xy_goal_tolerance: 0.15
-      RotateToGoal.slowing_factor: 5.0
-      RotateToGoal.lookahead_time: -1.0
+      RotateToGoal.slowing_factor: -1.0
+      RotateToGoal.lookahead_time: 1.0
 
 vikings_bot_1/local_costmap:
   local_costmap:
@@ -87,8 +95,8 @@ vikings_bot_1/local_costmap:
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 2.0
-        inflation_radius: 0.55
+        cost_scaling_factor: 4.0
+        inflation_radius: 0.65
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
