@@ -74,11 +74,6 @@ def generate_launch_description():
     ### NODES ###
     controller_node_n_params = GroupAction( # group to only set these params for this node
         actions=[
-             SetParameter( # set lidar topic filtered data type (because it sets to LaserScan when filtered lidar is published as pointCloud2)
-                name="voxel_layer.scan.data_type",
-                value="PointCloud2",
-                condition=IfCondition(do_change_lidar_topic)
-            ),
             SetParameter( # set lidar topic filtered
                 name="voxel_layer.scan.topic",
                 #value=PythonExpression(["'/",vikings_bot_name,"/lidar_scan/filtered/points'"]),
@@ -131,11 +126,6 @@ def generate_launch_description():
 
     planner_node_n_params = GroupAction( # group to only set these params for this node
         actions=[
-             SetParameter( # set lidar topic filtered data type (because it sets to LaserScan when filtered lidar is published as pointCloud2)
-                name="obstacle_layer.scan.data_type",
-                value="PointCloud2",
-                condition=IfCondition(do_change_lidar_topic)
-            ),
             SetParameter( # set lidar topic filtered
                 name="obstacle_layer.scan.topic",
                 value=PythonExpression(["'/",vikings_bot_name,"/lidar_scan_filtered'"]),
