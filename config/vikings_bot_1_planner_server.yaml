@@ -23,7 +23,12 @@ vikings_bot_1/global_costmap:
       footprint: "[[0.8, 0.45], [-0.3, 0.45], [-0.3, -0.45], [0.8, -0.45]]"
       resolution: 0.05
       track_unknown_space: true
-      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      plugins: ["static_layer", "obstacle_layer", rm_safe_objects_layer, "inflation_layer"]
+      rm_safe_objects_layer:
+        plugin: "vikings_bot_point_cloud_processor/RmSafeObstaclesLayer"
+        enabled: True
+        point_topic: "/vikings_bot_1/safe_obstacle_points"
+        inflation_radius: 7 #px
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
