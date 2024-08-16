@@ -24,11 +24,19 @@ vikings_bot_2/controller_server:
       yaw_goal_tolerance: 0.15
     # DWB parameters
     FollowPath:
-      plugin: "dwb_core::DWBLocalPlanner"
+      plugin: "nav2_rotation_shim_controller::RotationShimController"
+      primary_controller: "dwb_core::DWBLocalPlanner"
+      angular_dist_threshold: 0.785
+      forward_sampling_distance: 0.5
+      rotate_to_heading_angular_vel: 0.5
+      max_angular_accel: 3.2
+      simulate_ahead_time: 1.0
+
+      # plugin: "dwb_core::DWBLocalPlanner"
       debug_trajectory_details: True
-      min_vel_x: -0.26
+      min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 0.26
+      max_vel_x: 0.3
       max_vel_y: 0.0
       max_vel_theta: 0.5
       min_speed_xy: 0.0
@@ -60,12 +68,12 @@ vikings_bot_2/controller_server:
       PathAlign.forward_point_distance: 0.1
       GoalAlign.scale: 0.0
       GoalAlign.forward_point_distance: 0.1
-      PathDist.scale: 32.0 # How strong to stay on global path
+      PathDist.scale: 32.0 # 
       GoalDist.scale: 24.0 # How strong to reach local goal
       RotateToGoal.scale: 32.0
       RotateToGoal.xy_goal_tolerance: 0.15
-      RotateToGoal.slowing_factor: 5.0
-      RotateToGoal.lookahead_time: -1.0
+      RotateToGoal.slowing_factor: -1.0
+      RotateToGoal.lookahead_time: 1.0
 
 vikings_bot_2/local_costmap:
   local_costmap:
@@ -74,7 +82,7 @@ vikings_bot_2/local_costmap:
       publish_frequency: 2.0
       transform_tolerance: 0.5
       global_frame: vikings_bot_2/odom
-      map_topic: /vikings_bot_1/map
+      map_topic: /vikings_bot_2/map
       robot_base_frame: vikings_bot_2/base_link
       #use_sim_time: True
       rolling_window: True
@@ -87,8 +95,8 @@ vikings_bot_2/local_costmap:
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 2.0
-        inflation_radius: 0.55
+        cost_scaling_factor: 4.0
+        inflation_radius: 0.65
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
