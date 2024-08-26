@@ -91,12 +91,16 @@ vikings_bot_2/local_costmap:
       resolution: 0.025
       #robot_radius: 0.175
       footprint: "[[0.81, 0.46], [-0.31, 0.46], [-0.31, -0.46], [0.81, -0.46]]"
-      #plugins: ["static_layer", "voxel_layer", "inflation_layer"]
-      plugins: ["voxel_layer", "inflation_layer"]
+      plugins: ["voxel_layer", "rm_safe_objects_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.0
         inflation_radius: 0.65
+      rm_safe_objects_layer:
+        plugin: "vikings_bot_point_cloud_processor/RmSafeObstaclesLayer"
+        enabled: True
+        point_topic: "/vikings_bot_2/safe_obstacle_points"
+        inflation_radius: 7 #px
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
