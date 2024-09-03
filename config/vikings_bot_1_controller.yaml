@@ -112,7 +112,7 @@ vikings_bot_1/local_costmap:
         mark_threshold: 0
         #observation_sources: scan # SET FROM LAUNCH FILE
         scan:
-          #topic: /vikings_bot_1/lidar_scan # SET FROM LAUNCH FILE
+          topic: /vikings_bot_1/lidar_scan
           #sensor_frame: vikings_bot_1/lidar_link
           max_obstacle_height: 2.0
           clearing: True
@@ -123,7 +123,7 @@ vikings_bot_1/local_costmap:
           obstacle_max_range: 2.5
           obstacle_min_range: 0.0
         point_cloud:
-          #topic: /vikings_bot_1/camera/depth/color/points #SET FROM LAUNCH FILE
+          topic: /vikings_bot_1/camera/depth/color/points
           max_obstacle_height: 2.0
           min_obstacle_height: 0.05 # otherwise floor is detected as obstacle
           clearing: True
