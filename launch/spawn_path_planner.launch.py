@@ -30,28 +30,18 @@ def generate_launch_description():
         default_value='True',
         description="Use lidar for navigation"
     )
-    filter_lidar_arg = DeclareLaunchArgument(
-        'filter_lidar',
-        default_value='False',
-        description='If True, then change lidar topic in planner server and controller.')
     
     use_depth_cam_arg = DeclareLaunchArgument(
         'use_depth_cam',
-        default_value='True',
+        default_value='False',
         description="Use depth camera for navigation"
     )
-    filter_depth_cam_arg = DeclareLaunchArgument(
-        'filter_depth_cam',
-        default_value='False',
-        description='If True, then change point cloud topic in planner server and controller.')
 
 
     vikings_bot_name = LaunchConfiguration("vikings_bot_name")
     use_sim = LaunchConfiguration("use_sim")
     use_lidar = LaunchConfiguration('use_lidar')
-    filter_lidar = LaunchConfiguration('filter_lidar')
     use_depth_cam = LaunchConfiguration('use_depth_cam')
-    filter_depth_cam = LaunchConfiguration('filter_depth_cam')
 
     package_name = 'vikings_bot_path_planner_server'
 
@@ -65,8 +55,6 @@ def generate_launch_description():
     behavior = PathJoinSubstitution([get_package_share_directory(package_name), 'config', 'behavior.xml'])
 
     # topic and observation source change conditions for local_costmap controller
-    do_change_lidar_topic = PythonExpression(["'", filter_lidar, "'.lower() == 'true'"])
-    do_change_depth_topic = PythonExpression(["'", filter_depth_cam, "'.lower() == 'true'"])
     do_use_lidar = PythonExpression(["'", use_lidar, "'.lower() == 'true'"])
     do_use_depth_cam = PythonExpression(["'", use_depth_cam, "'.lower() == 'true'"])
     do_use_lidar_and_depth_cam = PythonExpression(["('", use_depth_cam, "'.lower() == 'true') and ('", use_lidar, "'.lower() == 'true')"])
@@ -74,27 +62,6 @@ def generate_launch_description():
     ### NODES ###
     controller_node_n_params = GroupAction( # group to only set these params for this node
         actions=[
-            SetParameter( # set lidar topic filtered
-                name="voxel_layer.scan.topic",
-                #value=PythonExpression(["'/",vikings_bot_name,"/lidar_scan/filtered/points'"]),
-                value=PythonExpression(["'/",vikings_bot_name,"/lidar_scan_filtered'"]),
-                condition=IfCondition(do_change_lidar_topic)
-            ),
-            SetParameter( # set lidar topic to default
-                name="voxel_layer.scan.topic",
-                value=PythonExpression(["'/",vikings_bot_name,"/lidar_scan'"]),
-                condition=UnlessCondition(do_change_lidar_topic)
-            ),
-            SetParameter( # set depth cam topic to filtered
-                name="voxel_layer.point_cloud.topic",
-                value=PythonExpression(["'/",vikings_bot_name,"/camera/filtered/depth/points'"]),
-                condition=IfCondition(do_change_depth_topic)
-            ),
-            SetParameter( # set depth cam topic to default
-                name="voxel_layer.point_cloud.topic",
-                value=PythonExpression(["'/",vikings_bot_name,"/camera/depth/color/points'"]),
-                condition=UnlessCondition(do_change_depth_topic)
-            ),
             SetParameter( # set obesrvation sources to only lidar
                 name="voxel_layer.observation_sources",
                 value='scan',
@@ -126,26 +93,6 @@ def generate_launch_description():
 
     planner_node_n_params = GroupAction( # group to only set these params for this node
         actions=[
-            SetParameter( # set lidar topic filtered
-                name="obstacle_layer.scan.topic",
-                value=PythonExpression(["'/",vikings_bot_name,"/lidar_scan_filtered'"]),
-                condition=IfCondition(do_change_lidar_topic)
-            ),
-            SetParameter( # set lidar topic to default
-                name="obstacle_layer.scan.topic",
-                value=PythonExpression(["'/",vikings_bot_name,"/lidar_scan'"]),
-                condition=UnlessCondition(do_change_lidar_topic)
-            ),
-            SetParameter( # set depth cam topic to filtered
-                name="obstacle_layer.point_cloud.topic",
-                value=PythonExpression(["'/",vikings_bot_name,"/camera/filtered/depth/points'"]),
-                condition=IfCondition(do_change_depth_topic)
-            ),
-            SetParameter( # set depth cam topic to default
-                name="obstacle_layer.point_cloud.topic",
-                value=PythonExpression(["'/",vikings_bot_name,"/camera/depth/color/points'"]),
-                condition=UnlessCondition(do_change_depth_topic)
-            ),
             SetParameter( # set obesrvation sources to only lidar
                 name="obstacle_layer.observation_sources",
                 value='scan',
@@ -222,9 +169,7 @@ def generate_launch_description():
         vikings_bot_name_arg,
         use_sim_arg,
         use_lidar_arg,
-        filter_lidar_arg,
         use_depth_cam_arg,
-        filter_depth_cam_arg,
 
         SetParameter('use_sim_time',  use_sim),
 
