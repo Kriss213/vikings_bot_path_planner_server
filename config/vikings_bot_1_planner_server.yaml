@@ -28,7 +28,7 @@ vikings_bot_1/global_costmap:
         plugin: "vikings_bot_point_cloud_processor/RmSafeObstaclesLayer"
         enabled: True
         point_topic: "/vikings_bot_1/safe_obstacle_points"
-        inflation_radius: 7 #px
+        inflation_px: 7 #px
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True

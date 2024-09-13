@@ -100,7 +100,7 @@ vikings_bot_2/local_costmap:
         plugin: "vikings_bot_point_cloud_processor/RmSafeObstaclesLayer"
         enabled: True
         point_topic: "/vikings_bot_2/safe_obstacle_points"
-        inflation_radius: 7 #px
+        inflation_px: 7 #px
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
