@@ -68,4 +68,4 @@ vikings_bot_2/global_costmap:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.0
         inflation_radius: 0.65
-      always_send_full_costmap: True
+      always_send_full_costmap: False
