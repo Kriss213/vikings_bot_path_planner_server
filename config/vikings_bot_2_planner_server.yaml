@@ -7,7 +7,8 @@ vikings_bot_2/planner_server:
       plugin: "nav2_navfn_planner/NavfnPlanner"
       tolerance: 0.5
       use_astar: false
-      allow_unknown: true
+      allow_unknown: false
+      use_final_approach_orientation: false
 
 vikings_bot_2/global_costmap:
   global_costmap:
