@@ -83,6 +83,7 @@ def generate_launch_description():
                 executable='controller_server',
                 name='controller_server',
                 output='screen',
+                respawn=True,
                 parameters=[
                     controller_yaml,
                     {'use_sim_time': use_sim}
@@ -114,6 +115,7 @@ def generate_launch_description():
                 executable='planner_server',
                 name='planner_server',
                 output='screen',
+                respawn=True,
                 parameters=[
                     planner_yaml,
                     {'use_sim_time': use_sim}
@@ -127,6 +129,7 @@ def generate_launch_description():
         package='nav2_behaviors',
         executable='behavior_server',
         name='behavior_server',
+        respawn=True,
         parameters=[
             recovery_yaml,
             {'use_sim_time': use_sim}
@@ -140,6 +143,7 @@ def generate_launch_description():
         executable='bt_navigator',
         name='bt_navigator',
         output='screen',
+        respawn=True,
         parameters=[
             bt_navigator_yaml,
             {"default_nav_to_pose_bt_xml": behavior},
@@ -153,6 +157,7 @@ def generate_launch_description():
         executable='lifecycle_manager',
         name='lifecycle_manager_pathplanner',
         output='screen',
+        respawn=True,
         parameters=[
             {'autostart': True},
             {'use_sim_time': use_sim},
