@@ -2,26 +2,27 @@ vikings_bot_2/controller_server:
   ros__parameters:
     #use_sim_time: True
     controller_frequency: 10.0
-    min_x_velocity_threshold: 0.001
-    min_y_velocity_threshold: 0.5
-    min_theta_velocity_threshold: 0.001
+    min_x_velocity_threshold: 0.0
+    min_y_velocity_threshold: 0.0
+    min_theta_velocity_threshold: 0.0
     failure_tolerance: 0.3
     progress_checker_plugin: "progress_checker"
     goal_checker_plugins: ["general_goal_checker"] 
     controller_plugins: ["FollowPath"]
     cmd_vel_topic: cmd_vel
 
+
     # Progress checker parameters
     progress_checker:
       plugin: "nav2_controller::SimpleProgressChecker"
-      required_movement_radius: 0.5
-      movement_time_allowance: 10.0
+      required_movement_radius: 0.25
+      movement_time_allowance: 15.0
     # Goal checker parameters
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.15
-      yaw_goal_tolerance: 0.15
+      xy_goal_tolerance: 0.3
+      yaw_goal_tolerance: 0.10
     # DWB parameters
     FollowPath:
       plugin: "nav2_rotation_shim_controller::RotationShimController"
@@ -55,7 +56,8 @@ vikings_bot_2/controller_server:
       linear_granularity: 0.05
       angular_granularity: 0.025
       transform_tolerance: 0.2
-      xy_goal_tolerance: 0.15
+      #xy_goal_tolerance: 0.10
+      #yaw_goal_tolerance: 0.10
       trans_stopped_velocity: 0.25
       short_circuit_trajectory_evaluation: True
       stateful: True
@@ -71,7 +73,7 @@ vikings_bot_2/controller_server:
       PathDist.scale: 32.0 # 
       GoalDist.scale: 24.0 # How strong to reach local goal
       RotateToGoal.scale: 32.0
-      RotateToGoal.xy_goal_tolerance: 0.15
+      RotateToGoal.xy_goal_tolerance: 0.10
       RotateToGoal.slowing_factor: -1.0
       RotateToGoal.lookahead_time: 1.0
 
@@ -100,7 +102,7 @@ vikings_bot_2/local_costmap:
         plugin: "vikings_bot_point_cloud_processor/RmSafeObstaclesLayer"
         enabled: True
         point_topic: "/vikings_bot_2/safe_obstacle_points"
-        inflation_px: 7 #px
+        inflation_px: 7 #px        
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -110,14 +112,14 @@ vikings_bot_2/local_costmap:
         z_voxels: 16
         max_obstacle_height: 2.0
         mark_threshold: 0
-        observation_sources: scan
+        #observation_sources: scan # SET FROM LAUNCH FILE
         scan:
           topic: /vikings_bot_2/lidar_scan
           #sensor_frame: vikings_bot_2/lidar_link
           max_obstacle_height: 2.0
           clearing: True
           marking: True
-          data_type: "LaserScan"
+          #data_type: "LaserScan" # set from message
           raytrace_max_range: 3.0
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
