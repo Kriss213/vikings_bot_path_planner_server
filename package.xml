@@ -13,7 +13,6 @@
   <depend>nav2_behaviors</depend>
   <depend>nav2_bt_navigator</depend>
   <depend>navigation2</depend>
-  <depend>vikings_bot_point_cloud_processor</depend>
   
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
