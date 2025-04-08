@@ -4,7 +4,7 @@
   <name>vikings_bot_path_planner_server</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="jecuks96@gmail.coms">hercogs</maintainer>
+  <maintainer email="kriss.vasermanslv@gmail.com">Krišs</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
