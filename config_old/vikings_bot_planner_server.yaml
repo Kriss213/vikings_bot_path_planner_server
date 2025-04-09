@@ -3,13 +3,11 @@
     expected_planner_frequency: 20.0
     planner_plugins: ["GridBased"]
     GridBased:
-      #plugin: "nav2_navfn_planner/NavfnPlanner"
-      plugin: "nav2_smac_planner/SmacPlannerHybrid"
-      smooth_path: True
-      motion_model_for_search: "DUBIN"
-      minimum_turning_radius: 0.7 #1.0
+      plugin: "nav2_navfn_planner/NavfnPlanner"
       tolerance: 0.5
+      use_astar: false
       allow_unknown: false
+      use_final_approach_orientation: false
 
 /**/global_costmap:
   global_costmap:
@@ -31,7 +29,7 @@
         mark_threshold: 0
         observation_sources: scan
         scan:
-          # topic: lidar_scan # set from launch file
+          # topic: lidar_scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -46,5 +44,5 @@
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.0
-        inflation_radius: 0.4 #0.65
+        inflation_radius: 0.65
       always_send_full_costmap: False
