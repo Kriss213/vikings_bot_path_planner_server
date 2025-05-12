@@ -40,6 +40,10 @@ def launch_setup(context, *args, **kwargs):
                 value=f"/{vikings_bot_name}/lidar_scan"
                 # for some reason this is not set from namespace (maybe because it is a nested node in controller manager?)
             ),
+            SetParameter(
+                name='map_topic',
+                value=f"/{vikings_bot_name}/map"
+            ),
             Node(
                 namespace=vikings_bot_name,
                 package='nav2_controller',
@@ -65,6 +69,10 @@ def launch_setup(context, *args, **kwargs):
                 name="obstacle_layer.scan.topic", # for scan observation source
                 value=f"/{vikings_bot_name}/lidar_scan"
                 # for some reason this is not set from namespace (maybe because it is a nested node in planner server?)
+            ),
+            SetParameter(
+                name='map_topic',
+                value=f"/{vikings_bot_name}/map"
             ),
             Node(
                 namespace=vikings_bot_name,
