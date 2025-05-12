@@ -3,9 +3,9 @@
     expected_planner_frequency: 20.0
     planner_plugins: ["GridBased"]
     GridBased:
-      #plugin: "nav2_navfn_planner/NavfnPlanner"
       plugin: "nav2_smac_planner/SmacPlannerHybrid"
       smooth_path: True
+      use_quadratic_cost_penalty: True
       motion_model_for_search: "DUBIN"
       minimum_turning_radius: 0.7 #1.0
       tolerance: 0.5
@@ -17,11 +17,11 @@
       update_frequency: 1.0
       publish_frequency: 1.0
       global_frame: map
-      map_topic: /map # common map server for all bots
+      # map_topic: set from launch file
       # robot_base_frame: base_link # set from launch file
       # use_sim_time: True
       footprint: "[[0.8, 0.45], [-0.3, 0.45], [-0.3, -0.45], [0.8, -0.45]]"
-      resolution: 0.05
+      resolution: 0.03
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
@@ -46,5 +46,5 @@
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.0
-        inflation_radius: 0.4 #0.65
+        inflation_radius: 0.65
       always_send_full_costmap: False
