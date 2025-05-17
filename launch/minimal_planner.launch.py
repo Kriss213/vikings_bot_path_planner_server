@@ -7,12 +7,19 @@ from launch.substitutions import (
     PathJoinSubstitution,
     PathJoinSubstitution
 )
+from typing import List
+from launch_ros.parameter_descriptions import ParameterValue
+from ast import literal_eval
 
 def launch_setup(context, *args, **kwargs):
 
     use_sim = False # CRUCIAL! Otherwise "sim time" will not tick unless Gazebo is runnning.
 
     package_name = 'vikings_bot_path_planner_server'
+
+    namespace = LaunchConfiguration("namespace")
+    obstacle_topics = LaunchConfiguration('obstacle_topics').perform(context)
+    obstacle_topics = literal_eval(obstacle_topics)
 
     ### CONFIG FILES ###
     controller_yaml = PathJoinSubstitution([get_package_share_directory(package_name), 'config', 'vikings_bot_controller.yaml'])
@@ -30,6 +37,7 @@ def launch_setup(context, *args, **kwargs):
                 value=f"/map"
             ),
             Node(
+                namespace=namespace,
                 package='nav2_controller',
                 executable='controller_server',
                 name='controller_server',
@@ -57,8 +65,14 @@ def launch_setup(context, *args, **kwargs):
                 name='update_frequency',
                 value=10.0
             ),
-           
+
+            # Set the obstacle topic parameter
+            SetParameter(
+                name='courier_obstacle_layer.point_topics',
+                value=ParameterValue(obstacle_topics, value_type=List[str])
+            ),
             Node(
+                namespace=namespace,
                 package='nav2_planner',
                 executable='planner_server',
                 name='planner_server',
@@ -73,6 +87,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     behaviour = Node(
+        namespace=namespace,
         package='nav2_behaviors',
         executable='behavior_server',
         name='behavior_server',
@@ -85,6 +100,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     navigator = Node(
+        namespace=namespace,
         package='nav2_bt_navigator',
         executable='bt_navigator',
         name='bt_navigator',
@@ -98,6 +114,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     lifecycle = Node(
+        namespace=namespace,
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',
         name='lifecycle_manager_pathplanner',
@@ -125,18 +142,19 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
 
 
-    use_sim_arg = DeclareLaunchArgument("use_sim",
-        default_value="True",
-        description='Use simulation or real time'
+    namespace_arg = DeclareLaunchArgument("namespace",
+        default_value="",
+        description='Namespace for planner'
     )
-    use_sim = LaunchConfiguration("use_sim")   
+    obstacle_topics_arg = DeclareLaunchArgument("obstacle_topics",
+        default_value="",
+        description='Obstacle topics'
+    )   
 
     return LaunchDescription([
-        #namespace_arg,
-        use_sim_arg,
+        namespace_arg,
+        obstacle_topics_arg,
         
-        SetParameter('use_sim_time',  use_sim),
-
         OpaqueFunction(function=launch_setup)
 
     ])

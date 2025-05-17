@@ -7,14 +7,16 @@
       smooth_path: True
       use_quadratic_cost_penalty: True
       motion_model_for_search: "DUBIN"
-      minimum_turning_radius: 0.7 #1.0
+      minimum_turning_radius: 0.4 #1.0
       tolerance: 0.5
       allow_unknown: false
+      downsample_costmap: True
+      downsample_factor: 8
 
 /**/global_costmap:
   global_costmap:
     ros__parameters:
-      update_frequency: 1.0 #is also set from minimal_planner.launch.py
+      update_frequency: 10.0 #is also set from minimal_planner.launch.py
       publish_frequency: 1.0
       global_frame: map
       # map_topic: set from launch file
@@ -41,9 +43,9 @@
           obstacle_min_range: 0.0      
       courier_obstacle_layer:
         plugin: "courier_obstacle_plugin::CourierObstacleLayer"
-        enabled: False # is set to true from minimal_planner.launch.py
-        point_topic: /obstacle_points
-        point_decay: 0.5 # should be ~simulation dt
+        enabled: true # is set to true from minimal_planner.launch.py
+        # point_topics: # set from the launch file
+        point_decay: 0.25 
 
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
