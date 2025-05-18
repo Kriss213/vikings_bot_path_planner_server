@@ -71,6 +71,10 @@ def launch_setup(context, *args, **kwargs):
                 name='courier_obstacle_layer.point_topics',
                 value=ParameterValue(obstacle_topics, value_type=List[str])
             ),
+            SetParameter(
+                name='courier_obstacle_layer.position_topic',
+                value=LaunchConfiguration('position_topic')
+            ),
             Node(
                 namespace=namespace,
                 package='nav2_planner',
@@ -149,11 +153,16 @@ def generate_launch_description():
     obstacle_topics_arg = DeclareLaunchArgument("obstacle_topics",
         default_value="",
         description='Obstacle topics'
+    )
+    position_topic_arg = DeclareLaunchArgument("position_topic",
+        default_value="",
+        description='Position topic'
     )   
 
     return LaunchDescription([
         namespace_arg,
         obstacle_topics_arg,
+        position_topic_arg,
         
         OpaqueFunction(function=launch_setup)
 
